@@ -72,7 +72,7 @@
     <Compile Include="ViewModels\DatePickerViewModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Tools\RelayCommand.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Model.cs" />
     <Page Include="Views\DatePickerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

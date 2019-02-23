@@ -11,7 +11,7 @@ namespace KMA.ProgrammingInCSharp2019.Kreshchenko.Lab01DateOfBirth.ViewModels
         private DateTime? _dateOfBirth;
         private int? _age;
         private string _shownText;
-
+        
         #region Commands
         private RelayCommand<object> _applyCommand;
         private RelayCommand<object> _cancelCommand;
@@ -25,7 +25,7 @@ namespace KMA.ProgrammingInCSharp2019.Kreshchenko.Lab01DateOfBirth.ViewModels
             set
             {
                 _dateOfBirth = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(DateOfBirth));
             }
         }
 
@@ -35,7 +35,7 @@ namespace KMA.ProgrammingInCSharp2019.Kreshchenko.Lab01DateOfBirth.ViewModels
             set
             {
                 _age = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(Age));
             }
         }
 
@@ -45,7 +45,7 @@ namespace KMA.ProgrammingInCSharp2019.Kreshchenko.Lab01DateOfBirth.ViewModels
             set
             {
                 _shownText = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(ShownText));
             }
         }
 
@@ -103,7 +103,8 @@ namespace KMA.ProgrammingInCSharp2019.Kreshchenko.Lab01DateOfBirth.ViewModels
         {
             return (end.Year - start.Year - 1) +
                    (((end.Month > start.Month) ||
-                     ((end.Month == start.Month) && (end.Day >= start.Day))) ? 1 : 0);
+                   ((end.Month == start.Month) && (end.Day >= start.Day)))
+                       ? 1 : 0);
         }
 
         private void CalculateZodiac()
@@ -120,48 +121,50 @@ namespace KMA.ProgrammingInCSharp2019.Kreshchenko.Lab01DateOfBirth.ViewModels
                 case int n when n >= 21 && n <= 50:
                     westernZodiac = "Aquarius";
                     break;
-                case int n when n >= 51 && n <= 79:
+                case int n when n >= 51 && n <= 79 + leap:
                     westernZodiac = "Pisces";
                     break;
-                case int n when n >= 80 && n <= 110:
+                case int n when n >= 80 + leap && n <= 110 + leap:
                     westernZodiac = "Aries";
                     break;
-                case int n when n >= 111 && n <= 141:
+                case int n when n >= 111 + leap && n <= 141 + leap:
                     westernZodiac = "Taurus";
                     break;
-                case int n when n >= 142 && n <= 172:
+                case int n when n >= 142 + leap && n <= 172 + leap:
                     westernZodiac = "Gemini";
                     break;
-                case int n when n >= 173 && n <= 203:
+                case int n when n >= 173 + leap && n <= 203 + leap:
                     westernZodiac = "Cancer";
                     break;
-                case int n when n >= 204 && n <= 234:
+                case int n when n >= 204 + leap && n <= 234 + leap:
                     westernZodiac = "Leo";
                     break;
-                case int n when n >= 235 && n <= 266:
+                case int n when n >= 235 + leap && n <= 266 + leap:
                     westernZodiac = "Virgo";
                     break;
-                case int n when n >= 267 && n <= 296:
+                case int n when n >= 267 + leap && n <= 296 + leap:
                     westernZodiac = "Libra";
                     break;
-                case int n when n >= 297 && n <= 326:
+                case int n when n >= 297 + leap && n <= 326 + leap:
                     westernZodiac = "Scorpio";
                     break;
-                case int n when n >= 327 && n <= 355:
+                case int n when n >= 327 + leap && n <= 355 + leap:
                     westernZodiac = "Sagittarius";
                     break;
-                case int n when n >= 355 || n <= 20:
+                case int n when n >= 355 + leap || n <= 20:
                     westernZodiac = "Capricorn";
                     break;
                 default:
                     westernZodiac = "Error";
                     break;
             }
-            ShownText = String.Concat(ShownText, $"\nYour western zodiac sign is {westernZodiac}.");
+
+            ShownText = string.Concat(ShownText, $"\nYour western zodiac sign is {westernZodiac}.");
 
             string[] chineseZodiacs =
                 {"Monkey", "Rooster", "Dog", "Pig", "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat"};
-            ShownText = String.Concat(ShownText, $"\nYour chinese zodiac sign is {chineseZodiacs[DateOfBirth.Value.Year % 12]}.");
+            ShownText = string.Concat(ShownText,
+                $"\nYour chinese zodiac sign is {chineseZodiacs[DateOfBirth.Value.Year % 12]}.");
         }
     }
 }
